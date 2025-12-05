@@ -1,0 +1,204 @@
+:root {
+    /* Base palette (normal) */
+    --alien-green: #b0d9d1;
+    /* soft teal-gray */
+    --alien-cyan: #f1b440;
+    /* golden yellow */
+    --alien-pink: #f2a2a9;
+    /* pink accent */
+    --white: #ffffff;
+
+    --text: var(--white);
+    --bg-grad-1: var(--alien-green);
+    --bg-grad-2: var(--alien-cyan);
+    --bg-grad-3: var(--alien-pink);
+
+    --panel-1: rgba(241, 180, 64, 0.15);
+    /* score bg */
+    --panel-1-border: rgba(241, 180, 64, 0.4);
+    --panel-2: rgba(176, 217, 209, 0.12);
+    /* status bg */
+    --panel-2-border: rgba(176, 217, 209, 0.35);
+
+    --btn-stop-bg: var(--alien-pink);
+    --btn-resume-bg: var(--alien-cyan);
+    --btn-replay-bg: #53d8ff;
+
+    --canvas-border: rgba(255, 255, 255, 0.08);
+    --leader-bg: rgba(0, 0, 0, 0.5);
+    --leader-text: #fff;
+}
+
+/* Light mode: same hues, brighter stops and panels */
+:root[data-theme="light"] {
+    --alien-green: #c8e6df;
+    --alien-cyan: #ffd06d;
+    --alien-pink: #f7b7bd;
+    --white: #ffffff;
+
+    --text: #1b1b1b;
+    --panel-1: rgba(241, 180, 64, 0.2);
+    --panel-1-border: rgba(241, 180, 64, 0.55);
+    --panel-2: rgba(176, 217, 209, 0.2);
+    --panel-2-border: rgba(176, 217, 209, 0.5);
+
+    --canvas-border: rgba(0, 0, 0, 0.08);
+    --leader-bg: rgba(255, 255, 255, 0.75);
+    --leader-text: #1b1b1b;
+}
+
+/* Dark mode: same hues, darker stops and panels */
+:root[data-theme="dark"] {
+    --alien-green: #6fa59c;
+    --alien-cyan: #c69030;
+    --alien-pink: #c87c83;
+    --white: #eaeaea;
+
+    --text: #eaeaea;
+    --panel-1: rgba(198, 144, 48, 0.2);
+    --panel-1-border: rgba(198, 144, 48, 0.5);
+    --panel-2: rgba(111, 165, 156, 0.2);
+    --panel-2-border: rgba(111, 165, 156, 0.5);
+
+    --canvas-border: rgba(255, 255, 255, 0.06);
+    --leader-bg: rgba(0, 0, 0, 0.6);
+    --leader-text: #eaeaea;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    font-family: system-ui, sans-serif;
+    background: linear-gradient(180deg, var(--bg-grad-1), var(--bg-grad-2), var(--bg-grad-3));
+    color: var(--text);
+    /* DO NOT hide cursor globally */
+    cursor: auto;
+}
+
+.wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 100%;
+    position: relative;
+    /* make absolute children (leaderboard) anchor here */
+}
+
+.title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--alien-cyan);
+}
+
+.hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.score {
+    font-weight: 700;
+    font-size: 24px;
+    padding: 8px 14px;
+    background: var(--panel-1);
+    border: 1px solid var(--panel-1-border);
+    border-radius: 10px;
+}
+
+.status {
+    font-size: 14px;
+    padding: 8px 12px;
+    background: var(--panel-2);
+    border: 1px solid var(--panel-2-border);
+    border-radius: 10px;
+}
+
+.toolbar {
+    display: flex;
+    gap: 8px;
+}
+
+canvas#game {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--alien-green), var(--alien-cyan), var(--alien-pink));
+    border: 1px solid var(--canvas-border);
+    /* Hide cursor only inside the game */
+    cursor: none;
+}
+
+.controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.controls button,
+.toolbar button {
+    padding: 10px 18px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: var(--white);
+}
+
+#stopBtn {
+    background: var(--btn-stop-bg);
+}
+
+#resumeBtn {
+    background: var(--btn-resume-bg);
+}
+
+#replayBtn {
+    background: var(--btn-replay-bg);
+    color: #0b1e29;
+}
+
+.toolbar button {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Leaderboard overlay */
+/* Leaderboard overlay pinned to screen */
+.leaderboard {
+    position: fixed;
+    /* instead of absolute */
+    top: 10px;
+    right: 10px;
+    width: 220px;
+    max-height: 340px;
+    background: var(--leader-bg);
+    color: var(--leader-text);
+    padding: 10px;
+    overflow-y: auto;
+    border-radius: 10px;
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    /* make sure it stays above canvas and HUD */
+}
+
+.leaderboard h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+}
+
+.leaderboard ul {
+    margin: 0;
+    padding-left: 18px;
+}

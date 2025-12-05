@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alien Cursor Shooter 👾</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="wrap">
+        <h1 class="title">Cursor = Alien Spaceship 👾</h1>
+
+        <header class="hud">
+            <div class="score" id="score">0</div>
+            <div class="status" id="status">Move your mouse to fly • Auto‑shoot enabled</div>
+            <div class="toolbar">
+                <button id="themeNormal">Theme: Normal</button>
+                <button id="themeLight">Theme: Light</button>
+                <button id="themeDark">Theme: Dark</button>
+            </div>
+        </header>
+
+        <canvas id="game" width="640" height="480"></canvas>
+
+        <div class="controls">
+            <button id="stopBtn">⏸ Stop</button>
+            <button id="resumeBtn">▶ Resume</button>
+            <button id="replayBtn">⟲ Replay</button>
+        </div>
+
+        <!-- Leaderboard overlay sits within .wrap so absolute positioning has a containing block -->
+        <aside id="leaderboard" class="leaderboard">
+            <h3>Leaderboard</h3>
+            <ul id="leaderboardList"></ul>
+        </aside>
+    </div>
+
+    <!-- IMPORTANT: match this filename to your actual JS file -->
+    <script src="script.js"></script>
+</body>
+
+</html>
